@@ -42,3 +42,22 @@ __**kbus94@yandex.ru**__
 ```
 mvn spring-boot:run
 ```
+Интерфейс:
+Главная страница.
+![img.JPG](img/main_w.JPG)
+Расписание.
+![img.JPG](img/rasp_w.JPG)
+Кинотека.
+![img.JPG](img/kinoteka_w.JPG)
+Страница покупки билета.
+![img.JPG](img/buyT_w.JPG)
+Страница с результатом успешной покупки билета.
+![img.JPG](img/buySucc_w.JPG)
+Страница с результатом неудачной покупки билета (билет уже купили).
+![img.JPG](img/buyF_w.JPG)
+Страница регистрации.
+![img.JPG](img/reg_w.JPG)
+Страница входа.
+![img.JPG](img/log_w.JPG)
+Ошибка повторной регистрации.
+![img.JPG](img/regF_w.JPG)
