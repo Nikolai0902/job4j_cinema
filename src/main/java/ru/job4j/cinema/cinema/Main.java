@@ -3,6 +3,10 @@ package ru.job4j.cinema.cinema;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * Основной класс
+ * @author Buslaev
+ */
 @SpringBootApplication
 public class Main {
     public static void main(String[] args) {

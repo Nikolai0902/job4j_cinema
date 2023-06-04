@@ -14,9 +14,21 @@ import javax.sql.DataSource;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+/**
+ * Класс конфигурирования
+ * @author Buslaev
+ */
 @Configuration
 public class DatasourceConfiguration {
 
+    /**
+     * Создаем обьект пула соединения DataSource.
+     * В качестве его реализации выступает класс BasicDataSource.
+     * @param url - jdbc.url
+     * @param username - jdbc.username
+     * @param password - jdbc.password
+     * @return - пул соединения с БД..
+     */
     @Bean
     public DataSource connectionPool(@Value("${jdbc.url}") String url,
                                      @Value("${jdbc.username}") String username,
@@ -30,11 +42,24 @@ public class DatasourceConfiguration {
         };
     }
 
+    /**
+     * создает экземпляр Sql2o.
+     * Sql2o это клиент для работы с БД, который позволяет писать меньше boiler-plate кода.
+     * В целом это небольшая ORM. ORM это Object Relation Mapping.
+     * @param dataSource - пул соединения с БД.
+     * @return - экземпляр Sql2o.
+     */
     @Bean
     public Sql2o databaseClient(DataSource dataSource) {
         return new Sql2o(dataSource, createConverters());
     }
 
+    /**
+     * Cоздает конвертер, который делает преобразование из Timestamp в LocalDateTime и наоборот.
+     * Конвертер будет делать преобразования вместо того, чтобы каждый раз дублировать логику.
+     * Этот конвертер будет использоваться Sql2o.
+     * @return
+     */
     private Quirks createConverters() {
         return new NoQuirks() {
             {

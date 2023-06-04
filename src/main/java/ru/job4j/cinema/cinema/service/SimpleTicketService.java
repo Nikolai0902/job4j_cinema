@@ -6,6 +6,10 @@ import ru.job4j.cinema.cinema.repository.TicketRepository;
 
 import java.util.Optional;
 
+/**
+ * Класс сервис - билеты
+ * @author Buslaev
+ */
 @Service
 public class SimpleTicketService implements TicketService {
 
@@ -15,16 +19,32 @@ public class SimpleTicketService implements TicketService {
         this.sql2oTicketRepository = sql2oTicketRepository;
     }
 
+    /**
+     * Поиск билета по id.
+     * @param id id.
+     * @return обьект билета.
+     */
     @Override
     public Optional<Ticket> findById(int id) {
         return sql2oTicketRepository.findById(id);
     }
 
+    /**
+     * Вставка билета.
+     * @param ticket билет.
+     * @return билет.
+     */
     @Override
     public Optional<Ticket> buyTicket(Ticket ticket) {
         return sql2oTicketRepository.addTicket(ticket);
     }
 
+    /**
+     * Поиск билета по ряду и месту.
+     * @param row ряд.
+     * @param place место.
+     * @return обьект билета.
+     */
     @Override
     public Optional<Ticket> findByRAndP(int row, int place) {
         return sql2oTicketRepository.findByRAndP(row, place);

@@ -2,6 +2,10 @@ package ru.job4j.cinema.cinema.model;
 
 import java.util.Objects;
 
+/**
+ * Модель данных жанра.
+ * @author Buslaev
+ */
 public class Genres {
     private int id;
     private String name;

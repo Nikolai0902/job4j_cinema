@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
+/**
+ * Класс сервис - сессия фильмов
+ * @author Buslaev
+ */
 @Service
 public class SimpleFilmSessionsService implements FilmSessionsService {
 
@@ -21,6 +25,11 @@ public class SimpleFilmSessionsService implements FilmSessionsService {
         this.filmsService = filmsService;
     }
 
+    /**
+     * Поиск сессии по id.
+     * @param id id
+     * @return сессия.
+     */
     @Override
     public Optional<FilmSessionsDto> findById(int id) {
         var optionalFSDto = sql2oFilmSessionsRepository.findById(id);
@@ -30,6 +39,10 @@ public class SimpleFilmSessionsService implements FilmSessionsService {
         return createFilmSessionDto(optionalFSDto.get());
     }
 
+    /**
+     * Все сессии.
+     * @return коллекция сессии.
+     */
     @Override
     public Collection<FilmSessionsDto> findAll() {
         Collection<FilmSessions> collection = sql2oFilmSessionsRepository.findAll();
@@ -44,6 +57,11 @@ public class SimpleFilmSessionsService implements FilmSessionsService {
         return dtoCollection;
     }
 
+    /**
+     * Приватный метод создания объекта FilmSessionsDto.
+     * @param sessions sessions
+     * @return объект FilmSessionsDto.
+     */
     private Optional<FilmSessionsDto> createFilmSessionDto(FilmSessions sessions) {
         var optionalFilms = filmsService.findById(sessions.getFilmId());
         if (optionalFilms.isEmpty()) {

@@ -7,6 +7,10 @@ import ru.job4j.cinema.cinema.model.User;
 import java.util.Collection;
 import java.util.Optional;
 
+/**
+ * Реализация репозитория - пользователь.
+ * @author Buslaev
+ */
 @Repository
 public class Sql2oUserRepository implements UserRepository {
 
@@ -16,6 +20,11 @@ public class Sql2oUserRepository implements UserRepository {
         this.sql2o = sql2o;
     }
 
+    /**
+     * Добавление пользователя.
+     * @param user пользователь.
+     * @return пользователь обернутый в Optional.
+     */
     @Override
     public Optional<User> save(User user) {
         Optional<User> rsl = Optional.empty();
@@ -34,6 +43,12 @@ public class Sql2oUserRepository implements UserRepository {
         return rsl;
     }
 
+    /**
+     * Поиск пользователя.
+     * @param email email.
+     * @param password password.
+     * @return пользователь обернутый в Optional.
+     */
     @Override
     public Optional<User> findByEmailAndPassword(String email, String password) {
         try (var connection = sql2o.open()) {
@@ -45,6 +60,10 @@ public class Sql2oUserRepository implements UserRepository {
         }
     }
 
+    /**
+     * Все пользователи.
+     * @return пользователи.
+     */
     @Override
     public Collection<User> findAll() {
         try (var connection = sql2o.open()) {
@@ -53,6 +72,10 @@ public class Sql2oUserRepository implements UserRepository {
         }
     }
 
+    /**
+     * Удаление пользователя.
+     * @param id id.
+     */
     @Override
     public boolean deleteById(int id) {
         try (var connection = sql2o.open()) {

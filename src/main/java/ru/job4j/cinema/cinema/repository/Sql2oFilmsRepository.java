@@ -7,6 +7,10 @@ import ru.job4j.cinema.cinema.model.Films;
 import java.util.Collection;
 import java.util.Optional;
 
+/**
+ * Реализация репозитория - фильмов.
+ * @author Buslaev
+ */
 @Repository
 public class Sql2oFilmsRepository implements FilmsRepository {
 
@@ -16,6 +20,11 @@ public class Sql2oFilmsRepository implements FilmsRepository {
         this.sql2o = sql2o;
     }
 
+    /**
+     * Поиск фильма в БД по id.
+     * @param id id
+     * @return фильм обернутая в Optional.
+     */
     @Override
     public Optional<Films> findById(int id) {
         try (var connection = sql2o.open()) {
@@ -26,6 +35,10 @@ public class Sql2oFilmsRepository implements FilmsRepository {
         }
     }
 
+    /**
+     * Вывод коллекции фильмов из БД.
+     * @return коллекция фильмов.
+     */
     @Override
     public Collection<Films> findAll() {
         try (var connection = sql2o.open()) {

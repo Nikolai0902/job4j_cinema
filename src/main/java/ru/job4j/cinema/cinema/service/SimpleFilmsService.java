@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
+/**
+ * Класс сервис - фильмов
+ * @author Buslaev
+ */
 @Service
 public class SimpleFilmsService implements FilmsService {
 
@@ -21,6 +25,11 @@ public class SimpleFilmsService implements FilmsService {
         this.simpleGenresService = simpleGenresService;
     }
 
+    /**
+     * поиск фильма по id.
+     * @param id id.
+     * @return фильм Dto.
+     */
     @Override
     public Optional<FilmsDto> findById(int id) {
         var optionalFilms = sql2oFilmsRepository.findById(id);
@@ -30,6 +39,10 @@ public class SimpleFilmsService implements FilmsService {
         return createFilmsDto(optionalFilms.get());
     }
 
+    /**
+     * Все фильмы.
+     * @return коллекция фильмов.
+     */
     @Override
     public Collection<FilmsDto> findAll() {
         Collection<Films> collection = sql2oFilmsRepository.findAll();
@@ -44,6 +57,11 @@ public class SimpleFilmsService implements FilmsService {
         return dtoCollection;
     }
 
+    /**
+     * Приватный метод создания объекта FilmsDto.
+     * @param films films
+     * @return объект FilmsDto.
+     */
     private Optional<FilmsDto> createFilmsDto(Films films) {
         var optionalGenres = simpleGenresService.findById(films.getGenreId());
         if (optionalGenres.isEmpty()) {

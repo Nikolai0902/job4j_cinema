@@ -7,6 +7,10 @@ import ru.job4j.cinema.cinema.model.File;
 import java.util.Collection;
 import java.util.Optional;
 
+/**
+ * Реализация репозитория - файла.
+ * @author Buslaev
+ */
 @Repository
 public class Sql2oFileRepository implements FileRepository {
 
@@ -16,6 +20,11 @@ public class Sql2oFileRepository implements FileRepository {
         this.sql2o = sql2o;
     }
 
+    /**
+     * Поиск файла в БД по id.
+     * @param id
+     * @return файл обернутый в Optional.
+     */
     @Override
     public Optional<File> findById(int id) {
         try (var connection = sql2o.open()) {
@@ -25,6 +34,10 @@ public class Sql2oFileRepository implements FileRepository {
         }
     }
 
+    /**
+     * Вывод коллекции файлов из БД.
+     * @return коллекция файлов.
+     */
     @Override
     public Collection<File> findAll() {
         try (var connection = sql2o.open()) {

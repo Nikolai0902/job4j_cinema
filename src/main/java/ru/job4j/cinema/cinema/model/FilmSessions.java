@@ -4,6 +4,10 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Модель данных сессии фильмов.
+ * @author Buslaev
+ */
 public class FilmSessions {
 
     public static final Map<String, String> COLUMN_MAPPING = Map.of(

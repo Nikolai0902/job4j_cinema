@@ -7,6 +7,10 @@ import ru.job4j.cinema.cinema.model.FilmSessions;
 import java.util.Collection;
 import java.util.Optional;
 
+/**
+ * Реализация репозитория - сессии фильмов.
+ * @author Buslaev
+ */
 @Repository
 public class Sql2oFilmSessionsRepository implements FilmSessionsRepository {
 
@@ -16,6 +20,11 @@ public class Sql2oFilmSessionsRepository implements FilmSessionsRepository {
         this.sql2o = sql2o;
     }
 
+    /**
+     * Поиск сессии в БД по id.
+     * @param id id
+     * @return сессия обернутая в Optional.
+     */
     @Override
     public Optional<FilmSessions> findById(int id) {
         try (var connection = sql2o.open()) {
@@ -26,6 +35,10 @@ public class Sql2oFilmSessionsRepository implements FilmSessionsRepository {
         }
     }
 
+    /**
+     * Вывод коллекции сессии из БД.
+     * @return коллекция сессии.
+     */
     @Override
     public Collection<FilmSessions> findAll() {
         try (var connection = sql2o.open()) {
@@ -34,6 +47,10 @@ public class Sql2oFilmSessionsRepository implements FilmSessionsRepository {
         }
     }
 
+    /**
+     * Удаление сессии в БД по id.
+     * @param id id
+     */
     @Override
     public boolean deleteById(int id) {
         try (var connection = sql2o.open()) {
@@ -44,6 +61,11 @@ public class Sql2oFilmSessionsRepository implements FilmSessionsRepository {
         }
     }
 
+    /**
+     * Добавление новой сессии.
+     * @param filmSessions filmSessions
+     * @return добавленная сессия обернутая в Optional.
+     */
     @Override
     public Optional<FilmSessions> addFilmSessions(FilmSessions filmSessions) {
         Optional<FilmSessions> filmSessionsOptional = Optional.empty();

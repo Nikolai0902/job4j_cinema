@@ -6,6 +6,10 @@ import ru.job4j.cinema.cinema.model.Halls;
 
 import java.util.Optional;
 
+/**
+ * Реализация репозитория - зал.
+ * @author Buslaev
+ */
 @Repository
 public class Sql2oHallsRepository implements HallsRepository {
 
@@ -15,6 +19,11 @@ public class Sql2oHallsRepository implements HallsRepository {
         this.sql2o = sql2o;
     }
 
+    /**
+     * Поиск зала в БД по id.
+     * @param id id
+     * @return зал обернутый в Optional.
+     */
     @Override
     public Optional<Halls> findById(int id) {
         try (var connection = sql2o.open()) {

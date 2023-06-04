@@ -12,10 +12,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Фильтр сессии пользователя.
+ * Избавляет от дублирования кода в контроллерах на проверку
+ * Гость или User.name.
+ * @author Buslaev
+ */
 @Component
 @Order(2)
 public class SessionFilter extends HttpFilter {
 
+    /**
+     * Обработка запроса.
+     */
     @Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         var session = request.getSession();

@@ -6,6 +6,10 @@ import ru.job4j.cinema.cinema.model.Halls;
 
 import java.util.Optional;
 
+/**
+ * Класс сервис - залов
+ * @author Buslaev
+ */
 @Service
 public class SimpleHallsService implements HallsService {
 
@@ -15,6 +19,11 @@ public class SimpleHallsService implements HallsService {
         this.sql2oHallsRepository = sql2oHallsRepository;
     }
 
+    /**
+     * поиск зала по id.
+     * @param id id.
+     * @return оьект зала.
+     */
     @Override
     public Optional<Halls> findById(int id) {
         return sql2oHallsRepository.findById(id);

@@ -3,6 +3,10 @@ package ru.job4j.cinema.cinema.model;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Модель данных зала.
+ * @author Buslaev
+ */
 public class Halls {
 
     public static final Map<String, String> COLUMN_MAPPING = Map.of(

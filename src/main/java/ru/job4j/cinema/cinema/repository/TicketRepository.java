@@ -5,6 +5,10 @@ import ru.job4j.cinema.cinema.model.Ticket;
 import java.util.Collection;
 import java.util.Optional;
 
+/**
+ * Интерфейс репозитория - билета.
+ * @author Buslaev
+ */
 public interface TicketRepository {
 
     Optional<Ticket> findById(int id);

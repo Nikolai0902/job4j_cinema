@@ -7,6 +7,10 @@ import ru.job4j.cinema.cinema.model.Ticket;
 import java.util.Collection;
 import java.util.Optional;
 
+/**
+ * Реализация репозитория - билеты.
+ * @author Buslaev
+ */
 @Repository
 public class Sql2oTicketRepository implements TicketRepository {
 
@@ -16,6 +20,11 @@ public class Sql2oTicketRepository implements TicketRepository {
         this.sql2o = sql2o;
     }
 
+    /**
+     * Поиск билета в БД по id.
+     * @param id id
+     * @return билет обернутый в Optional.
+     */
     @Override
     public Optional<Ticket> findById(int id) {
         try (var connection = sql2o.open()) {
@@ -26,6 +35,11 @@ public class Sql2oTicketRepository implements TicketRepository {
         }
     }
 
+    /**
+     * Вставка билета в БД.
+     * @param ticket билет.
+     * @return билет обернутый в Optional.
+     */
     @Override
     public Optional<Ticket> addTicket(Ticket ticket) {
         Optional<Ticket> ticketOptional = Optional.empty();
@@ -46,6 +60,12 @@ public class Sql2oTicketRepository implements TicketRepository {
         return ticketOptional;
     }
 
+    /**
+     * Поиск билета.
+     * @param row ряд
+     * @param place место
+     * @return билет обернутый в Optional.
+     */
     @Override
     public Optional<Ticket> findByRAndP(int row, int place) {
         try (var connection = sql2o.open()) {
@@ -57,6 +77,10 @@ public class Sql2oTicketRepository implements TicketRepository {
         }
     }
 
+    /**
+     * Все билеты.
+     * @return коллекция билетов.
+     */
     @Override
     public Collection<Ticket> findAll() {
         try (var connection = sql2o.open()) {
@@ -65,6 +89,12 @@ public class Sql2oTicketRepository implements TicketRepository {
         }
     }
 
+    /**
+     * Удаление билета из БД.
+     * @param sessionId id сессии.
+     * @param rowNumber ряд
+     * @param placeNumber место
+     */
     @Override
     public boolean deleteById(int sessionId, int rowNumber, int placeNumber) {
         try (var connection = sql2o.open()) {

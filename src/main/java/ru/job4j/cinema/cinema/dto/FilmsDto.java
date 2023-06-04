@@ -2,6 +2,10 @@ package ru.job4j.cinema.cinema.dto;
 
 import java.util.Objects;
 
+/**
+ * Модель данных фильма DTO.
+ * @author Buslaev
+ */
 public class FilmsDto {
 
     private int id;

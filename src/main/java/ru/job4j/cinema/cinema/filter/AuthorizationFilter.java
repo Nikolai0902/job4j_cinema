@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Set;
 
+/**
+ * Фильтр авторизации пользователя.
+ * @author Buslaev
+ */
 @Component
 @Order(1)
 public class AuthorizationFilter extends HttpFilter {
@@ -18,6 +22,21 @@ public class AuthorizationFilter extends HttpFilter {
     private final Set<String> allowedLinks1 = Set.of("index", "users", "register", "login", "errors", "logout",
             "{id}", "filmLibrary", "timetable", "buy", "idFS", "logo", "files");
 
+    /**
+     * Проверяем обращается ли пользователь к общедоступным адресам. Если да, то сразу пропускаем запрос.
+     * Далее если пользователь обращается адресам, требующих прав, то мы проверяем вошел ли пользователь в систему.
+     * Если не вошел, то перебрасываем его на страницу входа.
+     * Наконец, если пользователь залоггинен в системе, то мы разрешаем дальнейшее выполнение запроса.
+     *
+     * chain.doFilter(request, response) вызывает следующий в цепочке фильтр. Если его нет, то запрос уходит к контроллеру.
+     * response.sendRedirect(url) выполняет перенаправление по URL. Это аналогично "redirect:/.....".
+     *
+     * @param request запрос для возврата URI.
+     * @param response ответ.
+     * @param chain
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         var uri = request.getRequestURI();
@@ -34,6 +53,11 @@ public class AuthorizationFilter extends HttpFilter {
         chain.doFilter(request, response);
     }
 
+    /**
+     * Проверка uri на допустимость.
+     * @param uri
+     * @return
+     */
     private boolean isAlwaysPermitted(String uri) {
         String[] split = uri.split("/");
         return split.length > 0

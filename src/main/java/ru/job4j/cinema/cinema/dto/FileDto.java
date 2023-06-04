@@ -1,5 +1,9 @@
 package ru.job4j.cinema.cinema.dto;
 
+/**
+ * Модель данных файла DTO.
+ * @author Buslaev
+ */
 public class FileDto {
 
     private int id;

@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
+/**
+ * Класс сервис - файл
+ * @author Buslaev
+ */
 @Service
 public class SimpleFileService implements FileService {
 
@@ -22,6 +26,11 @@ public class SimpleFileService implements FileService {
         this.sql2oFileRepository = sql2oFileRepository;
     }
 
+    /**
+     * поиск файла по id.
+     * @param id id
+     * @return файл DTO.
+     */
     @Override
     public Optional<FileDto> getFileById(int id) {
         var fileOptional = sql2oFileRepository.findById(id);
@@ -32,6 +41,11 @@ public class SimpleFileService implements FileService {
         return Optional.of(new FileDto(fileOptional.get().getName(), content));
     }
 
+    /**
+     * Возвращает файл в byte[].
+     * @param path путь к файлу.
+     * @return файл в byte[].
+     */
     private byte[] readFileAsBytes(String path) {
         try {
             return Files.readAllBytes(Path.of(path));
@@ -40,6 +54,10 @@ public class SimpleFileService implements FileService {
         }
     }
 
+    /**
+     * Коллеция файлов.
+     * @return коллеция файлов.
+     */
     @Override
     public Collection<FileDto> findAll() {
         Collection<File> collection = sql2oFileRepository.findAll();

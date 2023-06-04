@@ -3,6 +3,10 @@ package ru.job4j.cinema.cinema.dto;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * Модель данных сессии фильмов DTO.
+ * @author Buslaev
+ */
 public class FilmSessionsDto {
 
     private int id;

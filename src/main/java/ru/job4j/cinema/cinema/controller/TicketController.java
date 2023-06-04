@@ -12,6 +12,10 @@ import ru.job4j.cinema.cinema.service.TicketService;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * Контроллер. Билеты.
+ * @author Buslaev
+ */
 @Controller
 @RequestMapping("/tickets")
 public class TicketController {
@@ -29,6 +33,12 @@ public class TicketController {
         this.hallsService = hallsService;
     }
 
+    /**
+     * Возвращает представление покупки билета.
+     * @param model
+     * @param idFS сессии фильма
+     * @return представление покупки билета
+     */
     @GetMapping("/buy/{idFS}")
     public String buyTicket(Model model, @PathVariable("idFS") int idFS) {
         var filmSessionsOptional = filmSessionsService.findById(idFS);
@@ -52,6 +62,16 @@ public class TicketController {
         return "tickets/buyTickets";
     }
 
+    /**
+     * Покупка билета.
+     * Обеспечение потокобезопасности будет нести ответственность СУБД.
+     * @param model
+     * @param ticket собранный обьект Ticket из формы
+     * @param rowCount ряд
+     * @param placeCount место
+     * @param session текущая сессия связанная с пользователем
+     * @return представление о удачной покупке либо неудачной.
+     */
     @PostMapping("/ticketBuy")
     public String buyTicket(Model model,
                             @ModelAttribute Ticket ticket,

@@ -6,6 +6,10 @@ import ru.job4j.cinema.cinema.model.Genres;
 
 import java.util.Optional;
 
+/**
+ * Реализация репозитория - жанра.
+ * @author Buslaev
+ */
 @Repository
 public class Sql2oGenresRepository implements GenresRepository {
 
@@ -15,6 +19,11 @@ public class Sql2oGenresRepository implements GenresRepository {
         this.sql2o = sql2o;
     }
 
+    /**
+     * Поиск жанра в БД по id.
+     * @param id id
+     * @return жанр обернутая в Optional.
+     */
     @Override
     public Optional<Genres> findById(int id) {
         try (var connection = sql2o.open()) {

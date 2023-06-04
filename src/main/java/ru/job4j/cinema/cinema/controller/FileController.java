@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.job4j.cinema.cinema.service.FileService;
 
+/**
+ * Контроллер. Файл
+ * @author Buslaev
+ */
 @RestController
 @RequestMapping("/files")
 public class FileController {
@@ -17,6 +21,11 @@ public class FileController {
         this.fileService = fileService;
     }
 
+    /**
+     * Взврвщает файл изображения в представление.
+     * @param id файла в БД.
+     * @return файл изображения.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<?> getPhoto(@PathVariable int id) {
         var contentOptional = fileService.getFileById(id);

@@ -2,6 +2,10 @@ package ru.job4j.cinema.cinema.model;
 
 import java.util.Objects;
 
+/**
+ * Модель данных файла.
+ * @author Buslaev
+ */
 public class File {
     private int id;
     private String name;

@@ -5,6 +5,10 @@ import ru.job4j.cinema.cinema.model.User;
 import java.util.Collection;
 import java.util.Optional;
 
+/**
+ * Интерфейс репозитория - пользователя.
+ * @author Buslaev
+ */
 public interface UserRepository {
 
     Optional<User> save(User user);
