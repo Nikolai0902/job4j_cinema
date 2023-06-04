@@ -1,0 +1,7 @@
+DELETE TABLE users;
+DELETE TABLE tickets;
+DELETE TABLE film_sessions;
+DELETE TABLE halls;
+DELETE TABLE films;
+DELETE TABLE genres;
+DELETE TABLE files;
