@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+    <title>Сервис - Кинотеатр!</title>
+</head>
+
+<body>
+<div class="container">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/logo">Cinema</a>
+            <div class="collapse navbar-collapse">
+                <div class="navbar-nav me-auto">
+                    <a class="nav-item nav-link" href="/index">Главная</a>
+                    <a class="nav-item nav-link active" th:href="@{/filmSessions/timetable}">Расписание</a>
+                    <a class="nav-item nav-link active" th:href="@{/films/filmLibrary}">Кинотека</a>
+                </div>
+                <div class="d-flex" th:if="${user.fullName == 'Гость'}">
+                    <a class="nav-link text-secondary me-3" th:href="@{/users/register}">Регистрация</a>
+                    <a class="nav-link text-secondary" th:href="@{/users/login}">Войти</a>
+                </div>
+                <div class="d-flex" th:if="${user.fullName != 'Гость'}">
+                    <a class="nav-link text-secondary me-3" href="#" th:text="${user.fullName}"></a>
+                    <a class="nav-link text-secondary" th:href="@{/users/logout}">Выйти</a>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+    <div class="row">
+        <div class="card" style="width: 100%">
+            <div class="card-header">
+                Описание фильма.
+            </div>
+            <div class="card-body">
+                <h3>Фильм: </h3>
+                <h3 th:text="${film.name}"></h3>
+                <h3>Описание: </h3>
+                <h3 th:text="${film.description}"></h3>
+                <h3>Сеанс: </h3>
+                <h3 th:text="${filmSessions.startTime}"></h3>
+                <h3>Зал: </h3>
+                <h3 th:text="${halls.name}"></h3>
+                <h3>Описание зала: </h3>
+                <h3 th:text="${halls.description}"></h3>
+                <h3>Цена: </h3>
+                <h3 th:text="${filmSessions.price}"></h3>
+            </div>
+            <div class="card-header">
+                Покупка билета.
+            </div>
+            <div class="card-body">
+                <form th:action="@{/tickets/ticketBuy}" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3" th:if="${error}">
+                        <p class="text-danger" th:text="${error}"></p>
+                    </div>
+                    <input type="hidden" name="id" value="0"/>
+                    <input type="hidden" name="sessionId" th:value="${filmSessions.id}"/>
+                    <div class="mb-3">
+                        <label for="rowCount">Ряд</label>
+                        <select class="form-control" id="rowCount" name="rowCount">
+                            <option th:each="rowCount : ${#numbers.sequence(1, halls.rowCount)}" th:value="${rowCount}" th:text="${rowCount}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="placeCount">Место</label>
+                        <select class="form-control" id="placeCount" name="placeCount">
+                            <option th:each="placeCount : ${#numbers.sequence(1, halls.placeCount)}" th:value="${placeCount}" th:text="${placeCount}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-6"></div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-6"><a class="btn btn-danger w-100" th:href="@{/filmSessions/timetable}">Отмена</a>
+                                </div>
+                                <div class="col-6">
+                                    <button class="btn btn-primary w-100" type="submit">Купить</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
