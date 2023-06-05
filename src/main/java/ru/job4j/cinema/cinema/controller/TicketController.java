@@ -82,16 +82,13 @@ public class TicketController {
         ticket.setPlaceNumber(placeCount);
         User userMovie = (User) session.getAttribute("user");
         ticket.setUserId(userMovie.getId());
-        var findTicket = ticketService.findByRAndP(ticket.getRowNumber(), ticket.getPlaceNumber());
-        if (findTicket.isPresent()) {
-            model.addAttribute("message", "Не удалось приобрести билет на заданное место.Вероятно оно уже занято. "
-                    + "Перейдите на страницу бронирования билетов и попробуйте снова.");
-            return "tickets/unsuccessful";
-        }
         var buyTicket = ticketService.buyTicket(ticket);
         if (buyTicket.isEmpty()) {
-            model.addAttribute("message", "Ошибка сервиса");
-            return "errors/404";
+            model.addAttribute("message",
+                    "Не удалось приобрести билет на заданное место."
+                            + "Вероятно оно уже занято. "
+                            + "Перейдите на страницу бронирования билетов и попробуйте снова.");
+            return "errors/409";
         }
         model.addAttribute("ticket", buyTicket.get());
         return "tickets/success";

@@ -1,5 +1,7 @@
 package ru.job4j.cinema.cinema.repository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Sql2o;
 import ru.job4j.cinema.cinema.model.User;
@@ -15,6 +17,8 @@ import java.util.Optional;
 public class Sql2oUserRepository implements UserRepository {
 
     private final Sql2o sql2o;
+
+    private static final Logger LOG = LoggerFactory.getLogger(Sql2oUserRepository.class.getName());
 
     public Sql2oUserRepository(Sql2o sql2o) {
         this.sql2o = sql2o;
@@ -38,7 +42,7 @@ public class Sql2oUserRepository implements UserRepository {
             user.setId(generatedId);
             rsl = Optional.of(user);
         } catch (Exception e) {
-            return Optional.empty();
+            LOG.error("Exception connection", e);
         }
         return rsl;
     }
@@ -51,13 +55,17 @@ public class Sql2oUserRepository implements UserRepository {
      */
     @Override
     public Optional<User> findByEmailAndPassword(String email, String password) {
+        Optional<User> rsl = Optional.empty();
         try (var connection = sql2o.open()) {
             var query = connection.createQuery("SELECT * FROM users WHERE email = :email AND password = :password");
             query.addParameter("email", email);
             query.addParameter("password", password);
             var user = query.setColumnMappings(User.COLUMN_MAPPING).executeAndFetchFirst(User.class);
-            return Optional.ofNullable(user);
+            rsl = Optional.ofNullable(user);
+        } catch (Exception e) {
+            LOG.error("Exception connection", e);
         }
+        return rsl;
     }
 
     /**

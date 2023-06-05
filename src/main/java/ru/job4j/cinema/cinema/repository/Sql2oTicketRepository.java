@@ -1,8 +1,11 @@
 package ru.job4j.cinema.cinema.repository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Sql2o;
 import ru.job4j.cinema.cinema.model.Ticket;
+import ru.job4j.cinema.cinema.model.User;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -15,6 +18,8 @@ import java.util.Optional;
 public class Sql2oTicketRepository implements TicketRepository {
 
     private final Sql2o sql2o;
+
+    private static final Logger LOG = LoggerFactory.getLogger(Sql2oTicketRepository.class.getName());
 
     public Sql2oTicketRepository(Sql2o sql2o) {
         this.sql2o = sql2o;
@@ -56,6 +61,8 @@ public class Sql2oTicketRepository implements TicketRepository {
             int generatedId = query.executeUpdate().getKey(Integer.class);
             ticket.setId(generatedId);
             ticketOptional = Optional.of(ticket);
+        } catch (Exception e) {
+            LOG.error("Exception connection", e);
         }
         return ticketOptional;
     }
@@ -68,13 +75,17 @@ public class Sql2oTicketRepository implements TicketRepository {
      */
     @Override
     public Optional<Ticket> findByRAndP(int row, int place) {
+        Optional<Ticket> rsl = Optional.empty();
         try (var connection = sql2o.open()) {
             var query = connection.createQuery("SELECT * FROM tickets WHERE row_number = :rowNumber AND place_number = :placeNumber");
             query.addParameter("rowNumber", row);
             query.addParameter("placeNumber", place);
             var ticket = query.setColumnMappings(Ticket.COLUMN_MAPPING).executeAndFetchFirst(Ticket.class);
-            return Optional.ofNullable(ticket);
+            rsl = Optional.ofNullable(ticket);
+        } catch (Exception e) {
+            LOG.error("Exception connection", e);
         }
+        return rsl;
     }
 
     /**
